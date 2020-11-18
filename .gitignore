@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+
+#ignorar pasta
+data/raster
+modelos
+docs
