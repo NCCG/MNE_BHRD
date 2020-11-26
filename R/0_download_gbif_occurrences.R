@@ -27,9 +27,9 @@ library(taxize)
 
 # fill in your gbif.org credentials. You need to create an account at gbif if you don't have it.
 
-user <- "daniomoreira" # your gbif.org username
-pwd <- "jupter81" # your gbif.org password
-email <- "daniomoreira@gmail.com" # your email
+user <- "username" # your gbif.org username
+pwd <- "password" # your gbif.org password
+email <- "youremail" # your email
 
 #############################################################################
 oc <- read.csv("./data/registros/list_56spp.csv", sep = ';')
