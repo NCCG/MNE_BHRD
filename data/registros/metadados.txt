@@ -1,0 +1,50 @@
+all_BHRD - lista de espécies da flora para a BHRD. Compilado por Talita.
+
+List_BHRD - lista de espécies da flora para a BHRD, mas sem as colunas
+de coordenadas. Compilado por Talita, modificada por Danielle.
+
+0185903-200613084148143 - arquivo baixado diretamente do GBIF, sem filtro. É a mesma
+informação do arquivo abaixo (Gbif_occ). Esse arquivo foi baixado usando 
+o scrip 1_download_gbif_occurences.R
+GBIF Occurrence Download https://doi.org/10.15468/dl.6htkhr
+1,013,180 occurrences included in download
+
+0190881-200613084148143 - arquivo baixado diretamente do GBIF, filtrando para Preserved Specimen
+e para a América do Sul. Esse arquivo foi baixado usando o scrip 1_download_gbif_occurences.R 
+e usando a lista de spp all_BHRD. Link do GBIF:DOI10.15468/dl.cgmk7q
+255,846 occurrences included in download.
+
+0190879-200613084148143 - arquivo baixado diretamente do GBIF a partir da lista de spp endemicas.
+É a mesma informação do arquivo gbif_endemicas_occ. Esse arquivo foi baixado usando 
+o scrip 1_download_gbif_occurences.R. Link do GBIF https://doi.org/10.15468/dl.7jqx9q
+51,046 occurrences included in download
+
+0190935-200613084148143 - arquivo baixado diretamente do GBIF a partir da lista de all_BHRD
+Esse arquivo foi baixado usando o scrip 1_download_gbif_occurences.R. Filtro: Continente: América
+do Sul.
+290,299 occurrences included in download
+https://doi.org/10.15468/dl.frzcby
+
+Gbif_occ - registros brutos (raw) geográficos das spp da lista (all_BHRD) 
+para o mundo retirados do GBIF. Compilado por Danielle.
+
+Gbif_endemicas_occ - registros brutos (raw) geográficos das spp da lista (endemicas) 
+para a América do Sul, retirados do GBIF. Compilado por Danielle.
+
+spp_points - registros geográficos modificados do arquivo Gbif_occ.
+Estão presentes apenas 3 colunas (spp, lon, lat). Filtrado por Danielle.
+
+spp_points_amesul - registros geográficos (do arquivo spp_points)
+cortados para a América do Sul. Modificado por Danielle.
+
+spp_points_amesul_clean - tabela com os registros geográficos (do arquivo spp_points)
+cortados para a América do Sul, após a limpeza espacial com o uso do pacote CoordinateCleaner.
+Modificado por Danielle.
+
+spp_points_for_model - registros geográficos (do arquivo spp_points), após a limpeza espacial,
+cortados para a América do Sul, deixadas apenas as colunas de spp, localidades e coordenadas.
+Modificado por Danielle.
+
+
+
+
