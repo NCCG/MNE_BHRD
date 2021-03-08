@@ -1,8 +1,8 @@
 ###########################################
-# Teste modleR                            #
-# Step 4: Limpeza                         #
-# Especies arvores BHRD                   #
-# Kele Rocha Firmiano & Danielle O Moreira#
+# ModleR                                  #
+# Cleanning                               #
+# Species trees occurrences               #
+# Danielle O Moreira#
 ###########################################
 
 # Packages
@@ -15,7 +15,7 @@ library(raster)
 # para trabalhar com o ModleR
 library(modleR)
 
-# Loading selected environment data (pca axes, Pearson correlation, etc)
+# Loading selected environment data (pca axes, Pearson correlation, vif, etc)
 clim <- list.files(path="./data/raster/selection_vif", ".*.tif$",
                    full.names = TRUE)
 
@@ -26,7 +26,7 @@ plot(clim.stack)  # stack raster
 #library(data.table)
 #data<-fread("./data/registros/endemicas/6_endemic_pts_for_model.csv")
 
-data<-read.csv("./data/registros/endemicas/6_endemic_pts_for_model.csv", header = T, sep=",", dec=".", encoding="utf-8")
+data<-read.csv("./data/registros/endemicas/para_teste.csv", header = T, sep=";", dec=".", encoding="utf-8")
 
 View(data)
 head(data)
@@ -63,7 +63,11 @@ head(table3)
 #  count(sp)
 
 library(dplyr)
-table(table$sp)%>%sort()
+
+#To check the frequency of occurrences for each species
+a <- table(table$sp)%>%sort()
+
+View(a)
 
 #to make a list of species names
 species <- unique(table3$sp)
@@ -72,6 +76,8 @@ species
 # Plot in a map the occurrences
 library(rgdal) #for shapefile
 shp<- readOGR("./data/shape/amesul.shp") #loading shapefile
+crs(shp) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "
+proj4string(shp)
 
 plot(shp)
 points(table3$lon, table3$lat, col = "red", cex = .1)
@@ -81,9 +87,19 @@ points(table3$lon, table3$lat, col = "red", cex = .1)
 args(setup_sdmdata)
 ?setup_sdmdata
 
-for (i in 1:length(table3)) {
+#create a list from our table3
+data_list <- split(table3, seq(nrow(table3)))
+data_list <- setNames(split(table3, seq(nrow(table3))), rownames(table3))
+names <- table3$sp
+names(data_list) <- names
+
+species <- names(data_list)
+view(species)
+
+
+for (i in 1:length(data_list)) {
   sp <- species[i]
-  occs <- table3[[i]]
+  occs <- data_list[[i]]
   setup_sdmdata(species_name = sp,
                 occurrences = occs,
                 lon = "lon",
@@ -107,7 +123,4 @@ for (i in 1:length(table3)) {
 )
 }
 
-sdmdata_1sp
-#para ver o numero de registros depois da limpeza
-dim(sdmdata_1sp)
-head(sdmdata_1sp)
+
