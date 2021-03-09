@@ -79,22 +79,20 @@ shp<- readOGR("./data/shape/amesul.shp") #loading shapefile
 crs(shp) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "
 proj4string(shp)
 
-plot(shp)
+
+plot(clim.stack[[2]])
+plot(shp, add=TRUE)
 points(table3$lon, table3$lat, col = "red", cex = .1)
+
+#create a list from our table3
+data_list <- split(table3, table3$sp)
+names(data_list) #check names
+species <- names(data_list)
 
 ######################## LIMPEZA DOS DADOS ####################################
 
 args(setup_sdmdata)
 ?setup_sdmdata
-
-#create a list from our table3
-data_list <- split(table3, seq(nrow(table3)))
-data_list <- setNames(split(table3, seq(nrow(table3))), rownames(table3))
-names <- table3$sp
-names(data_list) <- names
-
-species <- names(data_list)
-view(species)
 
 
 for (i in 1:length(data_list)) {
@@ -112,7 +110,7 @@ for (i in 1:length(data_list)) {
                 buffer_type = "mean",
                 write_buffer = T,
                 png_sdmdata = T,
-                n_back = 1000,
+                n_back = 5000,
                 clean_dupl = T,
                 clean_uni = T,
                 clean_nas = T,
