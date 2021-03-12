@@ -1,6 +1,7 @@
-###############################################
-###Para adquirir variAveis ambientais##########
-##############################################
+
+#######################################################
+###         BIOCLIMATIC VARIABLES            ##########
+#######################################################
 
 getwd()
 
@@ -24,12 +25,16 @@ envi <- getData("worldclim", var = "bio", res = 5, path = './data/raster')
 #para baixar dados de resolução de 30 seg (ou ~1km) (res = 0.5), deve-se informar uma latitude e longitude. Ex:
 #envi <- getData("worldclim", var = "bio", res = 0.5, path = './data/raster', lon = -57, lat = -33)
 
+
+
+
 ############################  LER VARIOS ARQUIVOS RASTER (STACK)  #################
 raster_files <- list.files("./data/raster/wc5", full.names = T, '.bil$') ##use pattern = '.tif$' or something else if you have multiple files in this folder
 head(raster_files)
 
 envi <- stack(raster_files)
 plot(envi)
+
 
 
 #############################  CORTAR RASTER (CROP)  ####################################
@@ -45,6 +50,9 @@ envi.shp<- mask(envi.cut, shp)
 plot(envi.shp)
 
 envi.shp
+
+
+
 
 ##################### Para salvar os novos rasters cortados ##################################
 

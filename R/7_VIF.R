@@ -1,3 +1,14 @@
+################################################################################
+###                                                                          ###
+###             Variance inflation factor (VIF)                              ###
+###                                                                          ###
+###                                                                          ###
+###                Created by Daphne Spier                                   ###
+###                                                                          ###
+###                                                                          ###
+################################################################################
+
+
 
 if(!require(pacman)) install.packages("pacman")
 pacman::p_load(gdm, raster, maptools, rgdal, psych, plyr, devtools)

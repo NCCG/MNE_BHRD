@@ -3,7 +3,7 @@
 ################### PCA ##########################################
 #################################################################
 
-##### If you decide to use it for Ecological Niche Modeling. Otherwise, for correlation test, skip to script #6 ################
+##### If you decide to use PCA for Ecological Niche Modeling. Otherwise, for correlation test, skip to script 6 or 7 
 
 #Load packages:
 #to work with raster
@@ -17,33 +17,35 @@ library(RStoolbox)
 
 ############################ PCA ###############################################
 
-#para fazer PCA entre as variaveis ambientais do worldclim. O nSamples significa
-#que usamos uma amostragem de 70% dos pixels das variaveis do arquivo envi.shp
-envi.pca <- rasterPCA(clim.stack, nSamples = 0.7*ncell(clim.stack), nComp = nlayers(clim.stack), spca = FALSE, maskCheck = TRUE)
+# to make PCA from the worldclim's environmental variables. nSamples means that we use a 70% sampling of pixels from variables in the envi.shp file
+envi.pca <- rasterPCA(clim.stack, 
+                      nSamples = 0.7*ncell(clim.stack), 
+                      nComp = nlayers(clim.stack), 
+                      spca = FALSE, maskCheck = TRUE)
 
 ?rasterPCA
 
-#Para informar a importancia dos componentes
+# To inform components importance 
 summary(envi.pca$model)
 
-#neste exemplo, os dois primeiros componentes explicam mais de 96% da variacao (proportion of variance)
+# in this example, the first two components explain more than 96% of the variation (proportion of variance)
 
-#para informar a importancia dos componentes para cada variavel
+# to inform the importance of the components for each variable
 loadings(envi.pca$model)
 
-#Plotar o PCA
+#Plot o PCA
 plot(envi.pca$map[[1:2]])
 
-#Outra forma de plotar o mapa pca
+# Another way to plot the map
 ggRGB(envi.pca$map,1,2, stretch="lin", q=0)
 if(require(gridExtra)){
   plots <- lapply(1:2, function(x) ggR(envi.pca$map, x, geom_raster = TRUE))
   grid.arrange(plots[[1]],plots[[2]], ncol=2)
 }
 
-#######################  SALVAR OS RASTERS APOS PCA  #############################
+#######################  SAVE PCA RASTERS  #############################
 
-#criar uma pasta dentro do diretorio
+# Create a file inside a directory
 dir.create("./data/raster/wc5_amsul/pca")
 
 # create pca file to storage raster pca results
@@ -59,7 +61,7 @@ variaveis
 #create a raster stack from the input raster files
 variaveis.stack <- stack(variaveis)
 
-#Plotar os rasters em um mapa
+#Plot rasters in a map
 plot(variaveis.stack)
 
 variaveis.stack[2]

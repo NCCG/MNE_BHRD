@@ -1,7 +1,7 @@
 ################################################################################
 ###                                                                          ###
-###             TO CROP SPECIES RECORDS POINTS TO A SHAPEFILE              ###
-###                     
+###             TO CROP SPECIES RECORDS POINTS TO A SHAPEFILE                ###
+###                                                                          ###
 ###                                                                          ###
 ###                Created by Danielle de O. Moreira                         ###
 ###                         09 feb 2021                                      ###
@@ -59,7 +59,8 @@ crs(amesul)
 
 ## to assign the crs information  
 ## reproject shp to geographic system WGS 1984
-crs(amesul) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "
+crs(amesul) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
+#proj4string(amesul) <- CRS("+proj=longlat +datum=WGS84") #to assign a CRS
 
 proj4string(amesul)
 

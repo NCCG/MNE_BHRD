@@ -16,7 +16,8 @@ library(raster)
 ############################## CRIAR RASTER STACK ###########################
 #generate a list of input rasters ("grids")
 #pattern = "*.tif$" - filters for main raster files only and skips any associated files (e.g. world files)
-clim <- list.files(path="./data/raster/wc5_amsul", ".*.tif$",
+clim <- list.files(path="./data/raster/wc5_amsul", 
+                   ".*.tif$",
                    full.names = TRUE)
 
 clim
@@ -33,7 +34,9 @@ plot(clim.stack)
 #library(raster)
 
 #subsample 70% of pixels and calculate pairwise correlations
-clim.cor<- cor(sampleRandom(clim.stack, size = ncell(clim.stack)*0.7, nComp = nlayers(clim.stack)), 
+clim.cor<- cor(sampleRandom(clim.stack, 
+                            size = ncell(clim.stack)*0.7, 
+                            nComp = nlayers(clim.stack)), 
                method = "pearson")
 
 ?cor

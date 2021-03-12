@@ -117,4 +117,4 @@ names(spp.points)[names(spp.points) == "decimalLatitude"] <- "lat"
 head(spp.points)
 colnames(spp.points)
 
-write.csv(spp.points,file="./data/registros/endemic_pts_for_model.csv")
+write.csv(spp.points,file="./data/registros/endemicas/6_endemic_pts_for_model2.csv")
