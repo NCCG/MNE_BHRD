@@ -23,7 +23,7 @@ library(rgdal)
 
 library(data.table)
 #?fread
-spp.table <- fread("./data/registros/endemicas/3_gbif_endemicas_occ2.csv")
+spp.table <- fread("./data/registros/spp_Gualaxo/2_Gbif_occ_Gualaxo.csv")
 
 ###Checking the dimensions of the table
 dim(spp.table)
@@ -36,8 +36,8 @@ names(spp.table)
 View(spp.table)
 
 
-## Converting data.frame into a SpatialPointsDataFrame
-### note that the lon and lat columns are in columns 2 and 3
+## Converting data.frame into a SpatialPointsDataFrame for spatial operations
+### note that the lon and lat columns are in columns 23 and 22, respectively
 ### Get long and lat from your data.frame. Make sure that the order is in lon/lat.
 xy <- spp.table[,c(23,22)]
 
@@ -65,8 +65,9 @@ crs(amesul) <- "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"
 proj4string(amesul)
 
 ## Plot shp
-plot(amesul)
-plot(spp.shp, add=TRUE)
+plot(spp.shp, cex = .1)
+plot(amesul, add=TRUE)
+dev.off()
 
 # Now let's crop the points into the shapefile limits we want to. In this case, South America
 spp.shp.ame<-crop(spp.shp, amesul) #cut by file
@@ -74,13 +75,10 @@ spp.shp.ame<-crop(spp.shp, amesul) #cut by file
 dim(spp.shp.ame)
 
 ##Plot spatial objects
-plot(amesul)
-plot(spp.shp.ame, add=TRUE)
-
-# Save shp points of occurrences
-#writeOGR(spp.shp.ame, "./data/shapes", "spp_gbif_amesul", driver="ESRI Shapefile")
+plot(spp.shp.ame, cex = .3)
+plot(amesul, add=TRUE)
 
 #Save table of species for South America
-write.csv(spp.shp.ame, "./data/registros/endemicas/4_gbif_endemicas_amesul2.csv")
+write.csv(spp.shp.ame, "./data/registros/spp_Gualaxo/3_gbif_Gualaxo_amesul.csv")
 
 

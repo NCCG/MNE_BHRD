@@ -27,17 +27,17 @@ library(taxize)
 
 # fill in your gbif.org credentials. You need to create an account at gbif if you don't have it.
 
-user <- "XXXXXX" # your gbif.org username
+user <- "XXXXX" # your gbif.org username
 pwd <- "XXXXXX" # your gbif.org password
 email <- "XXXXXXX" # your email
 
 #############################################################################
-oc <- read.csv("./data/registros/endemicas/2_list_endemicas.csv", sep = ';')
+oc <- read.csv("./data/registros/spp_Gualaxo/list_spp_gualaxo.csv", sep = ';')
 names(oc)
 
 gbif_taxon_keys <-
-  read.csv("./data/registros/endemicas/2_list_endemicas.csv", sep = ';') %>% #For an file with a list of spp names
-  pull(spp) %>% #Specify the column from the list
+  read.csv("./data/registros/spp_Gualaxo/list_spp_gualaxo.csv", sep = ';') %>% #For an file with a list of spp names
+  pull(ï..spp) %>% #Specify the column from the list
   taxize::get_gbifid_(method="backbone") %>% # match names to the GBIF backbone to get taxonkeys
   imap(~ .x %>% mutate(original_sciname = .y)) %>% # add original name back into data.frame
   bind_rows() %T>% # combine all data.frames into one
