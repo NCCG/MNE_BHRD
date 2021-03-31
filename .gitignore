@@ -2,7 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-
+.zip
 
 #ignorar pasta
 data/raster

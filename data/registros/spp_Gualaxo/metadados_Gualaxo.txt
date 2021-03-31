@@ -1,0 +1,30 @@
+
+1_list_spp_gualaxo - lista de spp que estão sendo usadas na restauração da sub-bacia Gualaxo do Norte. 
+Compilada por Talita. 59 espécies.
+
+2_Gbif_occ_Gualaxo - registros brutos (raw) geográficos das spp da lista acima, 
+retirados do GBIF, filtrado para apenas "preserved specimen".
+Compilado por Danielle. Arquivo zipado 0234924-200613084148143 - baixado diretamente do GBIF.
+Esse arquivo foi baixado usando o scrip 1_download_gbif_occurences.R. 
+GBIF Occurrence Download https://doi.org/10.15468/dl.42874e
+54551 occurrences included in download
+
+3_gbif_Gualaxo_amesul - registros de ocorrência (do arquivo 2_Gbif_occ_Gualaxo)
+cortados para a América do Sul. Modificado por Danielle. 33221 occurrences.
+
+4_gbif_Gualaxo_amesul_clean - tabela com os registros de ocorrência (do arquivo 3_gbif_Gualaxo_amesul)
+cortados para a América do Sul, após a limpeza espacial com o uso do pacote CoordinateCleaner.
+Realizado por Danielle. 32282 occurrences
+
+5_Gualaxo_occ - registros de ocorrência (do arquivo 4_gbif_Gualaxo_amesul_clean), 
+deixadas apenas as colunas de espécies, localidades e coordenadas.
+Criado por Danielle.
+
+5_Gualaxo_occ_for_model - registros geográficos (do arquivo 5_gbif_MA_exc_amesul_clean), 
+deixadas apenas as colunas de espécies e coordenadas.
+Criado por Danielle.
+
+
+
+
+
