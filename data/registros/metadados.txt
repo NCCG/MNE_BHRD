@@ -28,22 +28,6 @@ https://doi.org/10.15468/dl.frzcby
 Gbif_occ - registros brutos (raw) geográficos das spp da lista (all_BHRD) 
 para o mundo retirados do GBIF. Compilado por Danielle.
 
-Gbif_endemicas_occ - registros brutos (raw) geográficos das spp da lista (endemicas) 
-para a América do Sul, retirados do GBIF. Compilado por Danielle.
-
-spp_points - registros geográficos modificados do arquivo Gbif_occ.
-Estão presentes apenas 3 colunas (spp, lon, lat). Filtrado por Danielle.
-
-spp_points_amesul - registros geográficos (do arquivo spp_points)
-cortados para a América do Sul. Modificado por Danielle.
-
-spp_points_amesul_clean - tabela com os registros geográficos (do arquivo spp_points)
-cortados para a América do Sul, após a limpeza espacial com o uso do pacote CoordinateCleaner.
-Modificado por Danielle.
-
-spp_points_for_model - registros geográficos (do arquivo spp_points), após a limpeza espacial,
-cortados para a América do Sul, deixadas apenas as colunas de spp, localidades e coordenadas.
-Modificado por Danielle.
 
 
 
