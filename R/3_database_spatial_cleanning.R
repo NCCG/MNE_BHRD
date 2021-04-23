@@ -164,16 +164,20 @@ View(c)
 
 
 #Save the occurrence table with species with more than 5 records
-write.csv(final,file="./data/registros/spp_Gualaxo/5_Gualaxo_occ_for_model.csv")
+write.csv(final,file="./data/registros/spp_Gualaxo/5_Gualaxo_occ2.csv")
 
 
 ############################# Save shp points #####################
 
-data<-read.csv("./data/registros/spp_Gualaxo/5_Gualaxo_occ_for_model.csv", 
+data<-read.csv("./data/registros/spp_Gualaxo/5_Gualaxo_occ2.csv", 
                header = T, sep=",", dec=".",
                encoding="utf-8")
 dim(data)
 names(data)
+
+# How many unique species?
+spp_unique <- table(data$spp)%>%sort()
+View(spp_unique)
 
 # If some coordinates are not available for some occurrences. We need to remove NA
 #library(tidyr)
@@ -195,4 +199,5 @@ spp.shp2 <- SpatialPointsDataFrame(coords = xy2,
                                   proj4string = CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
 
 # Save shp points of occurrences
-writeOGR(spp.shp2, "./data/shape", "spp_Gualaxo_gbif_amesul", driver="ESRI Shapefile")
+writeOGR(spp.shp2, "./data/shape", "spp_Gualaxo_gbif_amesul", driver="ESRI Shapefile", overwrite_layer = TRUE)
+

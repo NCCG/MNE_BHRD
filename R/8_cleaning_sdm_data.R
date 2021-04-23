@@ -27,9 +27,8 @@ plot(clim.stack)  # stack raster
 #library(data.table)
 #data<-fread("./data/registros/endemicas/6_endemic_pts_for_model.csv")
 
-data<-read.csv("./data/registros/endemicas/para_teste.csv", header = T, sep=";", dec=".", encoding="utf-8")
+data<-read.csv("./data/registros/spp_Gualaxo/5_Gualaxo_occ_for_model.csv", header = T, sep=",", dec=".", encoding="utf-8")
 
-View(data)
 head(data)
 
 # get column names
@@ -40,8 +39,6 @@ names(data)
 table <- subset(data, select=c("spp","lon","lat"))
 #change name of colunm spp to sp
 names(table)[names(table) == "spp"] <- "sp"
-str(table)
-
 
 library(tidyverse)
 # To rename spp names - changging space for "_"
@@ -50,6 +47,8 @@ table2 <- table %>%
                               pattern = " ", 
                               replacement = "_"))
 
+head(table2)
+
 #Excluding spaces after words
 table3 <- table2 %>% 
   mutate(sp = str_replace(sp, 
@@ -57,18 +56,18 @@ table3 <- table2 %>%
                            replacement = ""))
 head(table3)
 
+#write.csv(table3,file="./data/registros/spp_Gualaxo/6_gualaxo_modleR.csv")
+
 
 #Count number of occurrences to each spp
 
 #table %>% 
 #  count(sp)
 
-library(dplyr)
-
-#To check the frequency of occurrences for each species
-a <- table(table$sp)%>%sort()
-
-View(a)
+#library(dplyr)
+###To check the frequency of occurrences for each species
+#a <- table(table$sp)%>%sort()
+#View(a)
 
 #to make a list of species names
 species <- unique(table3$sp)
@@ -104,7 +103,7 @@ for (i in 1:length(data_list)) {
                 lon = "lon",
                 lat = "lat",
                 predictors = clim.stack,
-                models_dir = "~/modleR_test/purrr",
+                models_dir = "./modelos_gualaxo",
                # models_dir = "./modelos/loop",
                 partition_type = "bootstrap",
                 boot_n = 5,
@@ -118,7 +117,7 @@ for (i in 1:length(data_list)) {
                 clean_nas = T,
                 geo_filt = F,
                 geo_filt_dist = 10,
-                select_variables = T,
+                select_variables = F,
                 sample_proportion = 0.5
 )
 }
