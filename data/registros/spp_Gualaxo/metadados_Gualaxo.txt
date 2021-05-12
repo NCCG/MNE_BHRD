@@ -20,9 +20,14 @@ Realizado por Danielle. 34416 occurrences
 deixadas apenas as colunas de espécies, localidades e coordenadas.
 Criado por Danielle.
 
-5_Gualaxo_occ2 - registros geográficos (do arquivo 5_gbif_MA_exc_amesul_clean), 
-deixadas apenas as colunas de espécies e coordenadas.
+6_Gualaxo_ModleR - registros geográficos (do arquivo 5_gbif_MA_exc_amesul_clean), 
+deixadas apenas as colunas de espécies e coordenadas e removidas as espécies com 5 ou menos registros de ocorrência.
 Criado por Danielle.
+
+“Bacia_gualaxo_completa” - são todas as espécies que foram utilizadas no relatório do Gualaxo, incluindo as exóticas. São:
+67 espécies no total
+34 coincidem com a lista do BHRD enviada por Talita
+34 são usadas em programas de restauração na Mata Atlântica (comparando com a outra tabela abaixo) e para as outras 33 espécies restantes não achei esta informação.
 
 
 

@@ -15,6 +15,7 @@ spp.gbif.table <- fread("./data/registros/spp_Gualaxo/3_gbif_Gualaxo_amesul.csv"
 
 ###Checking the dimensions of the table
 dim(spp.gbif.table)
+unique(spp.gbif.table$species)
 
 ### checking the first rows of the table
 #head(spp.gbif.table)
@@ -58,6 +59,8 @@ data_clean3 <- data_clean2[-c(1,55:64)]
 
 dim(data_clean3)
 names(data_clean3)
+
+unique(data_clean3$species)
 
 ## to write the new table
 write.csv(data_clean3, "./data/registros/spp_Gualaxo/4_gbif_Gualaxo_amesul_clean.csv")
@@ -104,17 +107,17 @@ dev.off()
 
 
 
-####################################### Extra: Data manipulation: to let the table cleaner
+####################################### Extra: Data manipulation: cleanning table 
 
 ### Leaving only a few columns
 data.clean.sub <- subset(data_clean3, select=c("species","infraspecificEpithet","countryCode","stateProvince","locality","decimalLongitude","decimalLatitude"))
 
 ### Combining columns species and infraspecificEpithet
-data.clean.sub$spp <- paste(data.clean.sub$species,data.clean.sub$infraspecificEpithet)
+#data.clean.sub$spp <- paste(data.clean.sub$species,data.clean.sub$infraspecificEpithet)
 
 ### now excluding columns species and infraspecificEpithet
 names(data.clean.sub)
-spp.points <- subset(data.clean.sub, select=c("spp", "countryCode", "stateProvince", "locality", "decimalLongitude","decimalLatitude"))
+spp.points <- subset(data.clean.sub, select=c("species", "countryCode", "stateProvince", "locality", "decimalLongitude","decimalLatitude"))
 
 names(spp.points)
 
@@ -124,18 +127,22 @@ names(spp.points)[names(spp.points) == "decimalLatitude"] <- "lat"
 names(spp.points)
 colnames(spp.points)
 
+unique(spp.points$species)
 
 #Save table
 write.csv(spp.points,file="./data/registros/spp_Gualaxo/5_Gualaxo_occ.csv")
 
 # Leave table with 3 columns: spp, lon and lat
-spp.points2 <- subset(spp.points, select=c("spp", "lon","lat"))
+spp.points2 <- subset(spp.points, select=c("species", "lon","lat"))
 
 names(spp.points2)
 
+write.csv(spp.points2,file="./data/registros/spp_Gualaxo/6_Gualaxo_ModleR.csv")
+
+############################
 ### To select only species with more than 5 occurrences points
 # Checking the frequency of occurrences for each species
-a <- table(spp.points2$spp)%>%sort()
+a <- table(spp.points2$species)%>%sort()
 View(a)
 
 # we need to transform the frequency results in a data.frame
@@ -164,19 +171,19 @@ View(c)
 
 
 #Save the occurrence table with species with more than 5 records
-write.csv(final,file="./data/registros/spp_Gualaxo/5_Gualaxo_occ2.csv")
+write.csv(final,file="./data/registros/spp_Gualaxo/6_Gualaxo_ModleR.csv")
 
 
 ############################# Save shp points #####################
 
-data<-read.csv("./data/registros/spp_Gualaxo/5_Gualaxo_occ2.csv", 
+data<-read.csv("./data/registros/spp_Gualaxo/6_Gualaxo_ModleR.csv", 
                header = T, sep=",", dec=".",
                encoding="utf-8")
 dim(data)
 names(data)
 
 # How many unique species?
-spp_unique <- table(data$spp)%>%sort()
+spp_unique <- table(data$species)%>%sort()
 View(spp_unique)
 
 # If some coordinates are not available for some occurrences. We need to remove NA

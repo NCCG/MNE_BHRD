@@ -16,7 +16,7 @@ library(raster)
 library(modleR)
 
 # Loading selected environment data (pca axes, Pearson correlation, vif, etc)
-clim <- list.files(path="./data/raster/selection_vif", 
+clim <- list.files(path="./data/raster/wc2-5_amesul/pca", 
                    ".*.tif$",
                    full.names = TRUE)
 
@@ -27,7 +27,7 @@ plot(clim.stack)  # stack raster
 #library(data.table)
 #data<-fread("./data/registros/endemicas/6_endemic_pts_for_model.csv")
 
-data<-read.csv("./data/registros/spp_Gualaxo/5_Gualaxo_occ_for_model.csv", header = T, sep=",", dec=".", encoding="utf-8")
+data<-read.csv("./data/registros/spp_Gualaxo/6_gualaxo_modleR.csv", header = T, sep=",", dec=".", encoding="utf-8")
 
 head(data)
 
@@ -35,26 +35,29 @@ head(data)
 #colnames(data)
 names(data)
 
+unique(data$sp)
+
+# To remote white spaces from species names
 ### Leaving only a few columns
-table <- subset(data, select=c("spp","lon","lat"))
+#table <- subset(data, select=c("spp","lon","lat"))
 #change name of colunm spp to sp
-names(table)[names(table) == "spp"] <- "sp"
+#names(table)[names(table) == "spp"] <- "sp"
 
-library(tidyverse)
+#library(tidyverse)
 # To rename spp names - changging space for "_"
-table2 <- table %>% 
-  mutate(sp = str_replace(sp, 
-                              pattern = " ", 
-                              replacement = "_"))
+#table2 <- table %>% 
+#  mutate(sp = str_replace(sp, 
+#                              pattern = " ", 
+#                              replacement = "_"))
 
-head(table2)
+#head(table2)
 
 #Excluding spaces after words
-table3 <- table2 %>% 
-  mutate(sp = str_replace(sp, 
-                           pattern = " ", 
-                           replacement = ""))
-head(table3)
+#table3 <- table2 %>% 
+#  mutate(sp = str_replace(sp, 
+#                           pattern = " ", 
+#                           replacement = ""))
+#head(table3)
 
 #write.csv(table3,file="./data/registros/spp_Gualaxo/6_gualaxo_modleR.csv")
 
@@ -70,8 +73,24 @@ head(table3)
 #View(a)
 
 #to make a list of species names
-species <- unique(table3$sp)
+#species <- unique(table3$sp)
+species <- unique(data$sp)
+
 species
+
+#Use species with more than 10 occurrences points
+#Count number of occurrences to each spp
+#To check the frequency of occurrences for each species
+count.occs <- table(data$sp)%>%sort()
+count.occs <- as.data.frame(count.occs)
+
+#Select only species with more than 10 points.
+library(dplyr)
+a <- count.occs %>% 
+  filter(Freq > 10)
+
+View(a)
+
 
 # Plot in a map the occurrences
 library(rgdal) #for shapefile
@@ -82,14 +101,19 @@ proj4string(shp)
 
 plot(clim.stack[[2]])
 plot(shp, add=TRUE)
-points(table3$lon, table3$lat, col = "red", cex = .1)
+#points(table3$lon, table3$lat, col = "red", cex = .1)
+points(data$lon, data$lat, col = "red", cex = .1)
 
-#create a list from our table3
-data_list <- split(table3, table3$sp)
+#create a list from our data/table3
+data_list <- split(data, data$sp)
 names(data_list) #check names
 species <- names(data_list)
 
-######################## LIMPEZA DOS DADOS ####################################
+#data_list <- split(table3, table3$sp)
+#names(data_list) #check names
+#species <- names(data_list)
+
+######################## Data Cleaning ####################################
 
 args(setup_sdmdata)
 ?setup_sdmdata
@@ -103,10 +127,9 @@ for (i in 1:length(data_list)) {
                 lon = "lon",
                 lat = "lat",
                 predictors = clim.stack,
-                models_dir = "./modelos_gualaxo",
-               # models_dir = "./modelos/loop",
+                models_dir = "./modelos/modelos_gualaxo",
                 partition_type = "bootstrap",
-                boot_n = 5,
+                boot_n = 10,
                 boot_proportion = 0.7,
                 buffer_type = "mean",
                 write_buffer = T,

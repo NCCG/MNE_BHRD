@@ -13,6 +13,8 @@
 
 ######################### MODEL DO MANY ####################################
 
+library(modleR)
+
 #Fitting a model per partition: do_many()
 args(do_many)
 ?do_many
@@ -21,17 +23,18 @@ for (i in 1:length(data_list)) {
   sp <- species[i]
   do_many(species_name = sp,
           predictors = clim.stack,
-          models_dir = "./modelos/loop",
+          models_dir = "./modelos/modelos_gualaxo",
           png_partitions = TRUE,
-          bioclim = TRUE,
+          bioclim = FALSE,
           maxnet = FALSE,
+          maxent = TRUE,
           rf = TRUE,
-          svmk = FALSE,
+          svmk = TRUE,
           svme = FALSE,
           brt = FALSE,
           glm = FALSE,
           domain = FALSE,
-          mahal = FALSE,
+          mahal = TRUE,
           equalize = TRUE,
           write_bin_cut = TRUE)
 }

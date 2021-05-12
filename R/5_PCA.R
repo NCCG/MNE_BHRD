@@ -17,6 +17,13 @@ library(RStoolbox)
 
 ############################ PCA ###############################################
 
+clim <- list.files(path="./data/raster/wc2-5_amesul/", 
+                   ".*.tif$",
+                   full.names = TRUE)
+
+clim.stack <- stack(clim)
+names(clim.stack)
+
 # to make PCA from the worldclim's environmental variables. nSamples means that we use a 70% sampling of pixels from variables in the envi.shp file
 envi.pca <- rasterPCA(clim.stack, 
                       nSamples = 0.7*ncell(clim.stack), 
@@ -34,26 +41,26 @@ summary(envi.pca$model)
 loadings(envi.pca$model)
 
 #Plot o PCA
-plot(envi.pca$map[[1:2]])
+plot(envi.pca$map[[1:3]])
 
 # Another way to plot the map
-ggRGB(envi.pca$map,1,2, stretch="lin", q=0)
+ggRGB(envi.pca$map,1,2,3, stretch="lin", q=0)
 if(require(gridExtra)){
-  plots <- lapply(1:2, function(x) ggR(envi.pca$map, x, geom_raster = TRUE))
-  grid.arrange(plots[[1]],plots[[2]], ncol=2)
+  plots <- lapply(1:3, function(x) ggR(envi.pca$map, x, geom_raster = TRUE))
+  grid.arrange(plots[[1]],plots[[2]], plots[[3]], ncol=2)
 }
 
 #######################  SAVE PCA RASTERS  #############################
 
 # Create a file inside a directory
-dir.create("./data/raster/wc5_amsul/pca")
+dir.create("./data/raster/wc2-5_amesul/pca")
 
 # create pca file to storage raster pca results
-writeRaster(envi.pca$map[[1:2]],"./data/raster/wc5_amsul/pca/env.pca.tif", format="GTiff", overwrite=TRUE, bylayer=TRUE) # write pcaraster
+writeRaster(envi.pca$map[[1:3]],"./data/raster/wc2-5_amesul/pca/env.pca.tif", format="GTiff", overwrite=TRUE, bylayer=TRUE) # write pcaraster
 
 #generate a list of input rasters ("grids")
 #pattern = "*.tif$" - filters for main raster files only and skips any associated files (e.g. world files)
-variaveis <- list.files(path="./data/raster/wc5_amsul/pca", ".*.tif$",
+variaveis <- list.files(path="./data/raster/wc2-5_amesul/pca", ".*.tif$",
                         full.names = TRUE)
 
 variaveis
