@@ -27,7 +27,7 @@ plot(clim.stack)  # stack raster
 #library(data.table)
 #data<-fread("./data/registros/endemicas/6_endemic_pts_for_model.csv")
 
-data<-read.csv("./data/registros/spp_Gualaxo/6_gualaxo_modleR.csv", header = T, sep=",", dec=".", encoding="utf-8")
+data<-read.csv("./data/registros/spp_Gualaxo/6_Gualaxo_ModleR.csv", header = T, sep=",", dec=".", encoding="utf-8")
 
 head(data)
 
@@ -35,7 +35,7 @@ head(data)
 #colnames(data)
 names(data)
 
-unique(data$sp)
+unique(data$species)
 
 # To remote white spaces from species names
 ### Leaving only a few columns
@@ -74,22 +74,22 @@ unique(data$sp)
 
 #to make a list of species names
 #species <- unique(table3$sp)
-species <- unique(data$sp)
+species <- unique(data$species)
 
 species
 
 #Use species with more than 10 occurrences points
 #Count number of occurrences to each spp
 #To check the frequency of occurrences for each species
-count.occs <- table(data$sp)%>%sort()
+count.occs <- table(data$species)%>%sort()
 count.occs <- as.data.frame(count.occs)
 
 #Select only species with more than 10 points.
-library(dplyr)
-a <- count.occs %>% 
-  filter(Freq > 10)
+#library(dplyr)
+#a <- count.occs %>% 
+#  filter(Freq > 10)
 
-View(a)
+#View(a)
 
 
 # Plot in a map the occurrences
@@ -105,7 +105,7 @@ plot(shp, add=TRUE)
 points(data$lon, data$lat, col = "red", cex = .1)
 
 #create a list from our data/table3
-data_list <- split(data, data$sp)
+data_list <- split(data, data$species)
 names(data_list) #check names
 species <- names(data_list)
 
